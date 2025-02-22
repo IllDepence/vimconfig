@@ -117,7 +117,9 @@ if has('nvim')
 
   " File Navigation and Fuzzy Finder
   Plug 'nvim-lua/plenary.nvim'
-  Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.6' }
+  Plug 'nvim-telescope/telescope.nvim'
+
+  " File Explorer
   Plug 'nvim-tree/nvim-tree.lua'
 
   " Autocompletion and Snippets
