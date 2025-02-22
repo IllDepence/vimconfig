@@ -75,12 +75,12 @@ nnoremap <C-N> :call SplitFullToggle()<cr>
 let g:split_is_full = 0
 function! SplitFullToggle()
     if g:split_is_full
-        echo "minimize"
-        exe "normal \<C-W>\<C-_>"
+        echo "equalize"
+        exe "normal \<C-W>="
         let g:split_is_full = 0
     else
         echo "maximize"
-        exe "normal \<C-W>\<C-=>"
+        exe "normal \<C-W>_\<C-W>|"
         let g:split_is_full = 1
     endif
 endfunction

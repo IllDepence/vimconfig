@@ -10,8 +10,6 @@ function M.setup()
             end,
         },
         mapping = {
-            ['<C-p>'] = cmp.mapping.select_prev_item(),
-            ['<C-n>'] = cmp.mapping.select_next_item(),
             -- Add tab support
             ['<Tab>'] = cmp.mapping.select_next_item(),
             ['<S-Tab>'] = cmp.mapping.select_prev_item(),
