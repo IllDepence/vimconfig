@@ -168,7 +168,6 @@ endif
   " Python-specific plugins
   Plug 'psf/black', { 'branch': 'stable' }
   Plug 'raimon49/requirements.txt.vim'
-  Plug 'petobens/poet-v'
 
 call plug#end()
 
@@ -296,9 +295,6 @@ augroup python_files
     if has('nvim') && !empty($VIRTUAL_ENV)
         let g:python3_host_prog = $VIRTUAL_ENV . '/bin/python'
     endif
-    " Add to Python-specific settings
-    let g:poetv_executables = ['pipenv']
-    let g:poetv_auto_activate = 1
 augroup END
 
 " ================================================
