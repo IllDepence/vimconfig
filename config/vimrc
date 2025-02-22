@@ -1,0 +1,347 @@
+" ================================================
+" Basic Setup
+" ================================================
+
+" Disable Vi compatibility mode to enable more advanced features
+set nocompatible
+
+" Set file encoding to UTF-8
+set encoding=utf-8
+
+" Convert tabs to spaces, 4 for tab key, 4 for autoindent
+set expandtab
+set tabstop=4
+set shiftwidth=4
+
+" Highlight all search results
+set hlsearch
+
+" Indicate tabs as ⁐⁐ and trailing spaces as ·
+set list
+exec "set listchars=tab:\u2050\u2050,trail:\uB7"
+
+" Prevent mouse clicks from changing cursor position
+" (Makes selecting to copy without holding shift possible)
+set mouse=r
+
+" Enable syntax highlighting
+syntax on
+
+" Full syntax highlighting for Python
+let python_highlight_all=1
+
+" Configure backspace key to work in various contexts
+set backspace=indent,eol,start
+
+" Faster startup
+let g:python3_host_prog = system('which python3')  " Update this line
+set lazyredraw                                " Don't redraw while executing macros
+
+" ================================================
+" File Specific Settings
+" ================================================
+
+" Python Indentation
+au BufNewFile,BufRead *.py
+    \ set tabstop=4
+    \| set softtabstop=4
+    \| set shiftwidth=4
+    \| set fileformat=unix
+    \| set expandtab
+    \| set autoindent
+
+" JavaScript, TypeScript, HTML, CSS Indentation
+au BufNewFile,BufRead *.js,*.ts,*.tsx,*.html,*.css,*.scss
+    \ set tabstop=2
+    \| set softtabstop=2
+    \| set shiftwidth=2
+    \| set fileformat=unix
+
+" ================================================
+" Split Window Settings
+" ================================================
+
+" Minimum window height
+set winminheight=0
+
+" Ctrl + h/j/k/l to move to window left/down/up/right
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+" Ctrl + n to toggle full/split view (custom function)
+nnoremap <C-N> :call SplitFullToggle()<cr>
+let g:split_is_full = 0
+function! SplitFullToggle()
+    if g:split_is_full
+        echo "minimize"
+        exe "normal \<C-W>\<C-_>"
+        let g:split_is_full = 0
+    else
+        echo "maximize"
+        exe "normal \<C-W>\<C-=>"
+        let g:split_is_full = 1
+    endif
+endfunction
+
+" ================================================
+" Code Folding
+" ================================================
+
+" Use indentation to define folds
+set foldmethod=indent
+
+" Open all folds by default
+set foldlevel=99
+
+" Space to toggle folds
+nnoremap <space> za
+
+" ================================================
+" Plugin Management with vim-plug
+" ================================================
+
+call plug#begin('~/.vim/plugged')
+
+  " Python Plugins
+  Plug 'tmhedberg/SimpylFold'
+
+  " General UI Plugins
+  Plug 'nvim-lualine/lualine.nvim'
+  Plug 'nvim-tree/nvim-web-devicons'
+
+  " Theme
+  Plug 'sainnhe/sonokai'
+
+  " Treesitter for better syntax highlighting and parsing
+  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+
+  " File Navigation and Fuzzy Finder
+  Plug 'nvim-lua/plenary.nvim'
+  Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.6' }
+  Plug 'nvim-tree/nvim-tree.lua'
+
+  " Commenting
+  Plug 'tpope/vim-commentary'
+
+  " Autocompletion and Snippets
+  Plug 'hrsh7th/nvim-cmp'
+  Plug 'hrsh7th/cmp-nvim-lsp'
+  Plug 'hrsh7th/cmp-nvim-lsp-signature-help'
+  Plug 'hrsh7th/cmp-buffer'
+  Plug 'hrsh7th/cmp-path'
+  Plug 'L3MON4D3/LuaSnip', {'tag': 'v2.*', 'do': 'make install_jsregexp'}
+
+  " LSP Configuration
+  Plug 'neovim/nvim-lspconfig'
+
+  " Formatter
+  Plug 'prettier/vim-prettier', {
+    \ 'do': 'npm install --frozen-lockfile --production',
+    \ 'for': [
+    \   'javascript',
+    \   'typescript',
+    \   'typescriptreact',
+    \   'css',
+    \   'less',
+    \   'scss',
+    \   'json',
+    \   'graphql',
+    \   'markdown',
+    \   'vue',
+    \   'svelte',
+    \   'yaml',
+    \   'html'
+    \ ]
+    \ }
+
+  " Visual Enhancements
+  Plug 'github/copilot.vim'
+
+  " Python-specific plugins
+  " " Python formatter
+  Plug 'psf/black', { 'branch': 'stable' }
+  " " Requirements files syntax
+  Plug 'raimon49/requirements.txt.vim'
+  " " Python virtual env management
+  Plug 'petobens/poet-v'
+
+  " Add to Plugin section
+  Plug 'lewis6991/gitsigns.nvim' " Git integration
+  Plug 'folke/which-key.nvim'    " Key binding helper
+
+call plug#end()
+
+" ================================================
+" Plugin Configurations
+" ================================================
+
+" Move all plugin-specific configurations here, including:
+" - Syntastic
+" - ALE
+" - Vim-Commentary
+" - SuperTab
+" - Copilot
+
+" --------------------------------
+" Lualine Setup
+" --------------------------------
+lua << EOF
+require('lualine').setup {
+  sections = {
+    lualine_a = {'mode'},
+    lualine_b = {'filename', 'diagnostics'},
+    lualine_c = {'branch', 'diff'},
+    lualine_x = {'encoding', 'fileformat', 'filetype'},
+    lualine_y = {'progress'},
+    lualine_z = {'location'}
+  }
+}
+EOF
+
+" --------------------------------
+" Nvim-Tree Setup
+" --------------------------------
+lua << EOF
+require("nvim-tree").setup()
+vim.api.nvim_set_keymap(
+    'n',
+    'fm',
+    '<cmd>NvimTreeToggle<cr>',
+    { noremap = true, silent = true }
+)
+EOF
+
+" --------------------------------
+" Treesitter Setup
+" --------------------------------
+lua << EOF
+require('nvim-treesitter.configs').setup {
+  ensure_installed = { "python", "javascript", "typescript", "lua", "vim", "vimdoc" },
+  sync_install = false,
+  auto_install = true,
+  highlight = {
+    enable = true,
+    additional_vim_regex_highlighting = false,
+  },
+}
+EOF
+
+" --------------------------------
+" Telescope Keybindings
+" --------------------------------
+nnoremap ff <cmd>Telescope find_files<cr>
+nnoremap fg <cmd>Telescope live_grep<cr>
+
+" --------------------------------
+" Copilot Configuration
+" --------------------------------
+
+" Disable Copilot when in /dev/shm
+au BufReadPre *
+    \ if expand('%:p:h') =~ '/dev/shm'
+    \ | let b:copilot_enabled = v:false
+    \ | endif
+
+" Ctrl + j to accept Copilot suggestions
+imap <silent><script><expr> <C-J> copilot#Accept("\<CR>")
+let g:copilot_no_tab_map = v:true
+
+" --------------------------------
+" Theme Setup
+" --------------------------------
+let g:sonokai_style = 'atlantis'
+let g:sonokai_better_performance = 1
+colorscheme sonokai
+
+" ================================================
+" LSP and Autocompletion Setup
+" ================================================
+" LSP configuration is in init.vim
+
+" ================================================
+" Additional Plugin Configurations
+" ================================================
+
+" -------------------------------
+" Vim-Commentary Mappings
+" -------------------------------
+" Space in visual mode to toggle comment
+vmap <Space> gc
+
+" ================================================
+" Final Settings
+" ================================================
+
+" Always turn on sign column to prevent code from jiggling left/right
+set signcolumn=yes
+
+" Disable automatic file type indentation (handled by vim-plug)
+filetype indent off
+
+" Python-specific settings
+augroup python_files
+    autocmd!
+    " Enable Black formatting on save
+    autocmd BufWritePre *.py Black
+    " Set Python path for Neovim
+    if has('nvim') && !empty($VIRTUAL_ENV)
+        let g:python3_host_prog = $VIRTUAL_ENV . '/bin/python'
+    endif
+    " Add to Python-specific settings
+    let g:poetv_executables = ['pipenv']
+    let g:poetv_auto_activate = 1
+augroup END
+
+" ================================================
+" Plugin Configurations
+" ================================================
+
+" Move all plugin-specific configurations here, including:
+" - Syntastic
+" - ALE
+" - Vim-Commentary
+" - SuperTab
+" - Copilot
+
+" --------------------------------
+" Git Signs Configuration
+" --------------------------------
+lua << EOF
+require('gitsigns').setup()
+EOF
+
+" --------------------------------
+" Which-key Configuration
+" --------------------------------
+lua << EOF
+require('which-key').setup()
+EOF
+
+" Replace current Black configuration with:
+augroup python_formatting
+    autocmd!
+    " Format on save if Black is available
+    autocmd BufWritePre *.py if executable('black') | 
+        \ silent! execute '!black --quiet %' |
+        \ endif
+    " Show formatting errors if any
+    autocmd BufWritePost *.py if v:shell_error | echohl WarningMsg |
+        \ echo 'Black formatting failed' |
+        \ echohl None |
+        \ endif
+augroup END
+
+" Add pipenv configuration
+augroup pipenv_settings
+    autocmd!
+    " Set Python path for Neovim when in a pipenv environment
+    if has('nvim')
+        let $PYTHONPATH = system('pipenv --venv 2>/dev/null')
+        if v:shell_error == 0
+            let g:python3_host_prog = substitute(system('pipenv --py'), '\n\+$', '', '')
+        endif
+    endif
+augroup END
+
