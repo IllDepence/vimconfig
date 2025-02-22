@@ -107,12 +107,10 @@ call plug#begin('~/.vim/plugged')
   " Python Plugins
   Plug 'tmhedberg/SimpylFold'
 
+if has('nvim')
   " General UI Plugins
   Plug 'nvim-lualine/lualine.nvim'
   Plug 'nvim-tree/nvim-web-devicons'
-
-  " Theme
-  Plug 'sainnhe/sonokai'
 
   " Treesitter for better syntax highlighting and parsing
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -121,9 +119,6 @@ call plug#begin('~/.vim/plugged')
   Plug 'nvim-lua/plenary.nvim'
   Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.6' }
   Plug 'nvim-tree/nvim-tree.lua'
-
-  " Commenting
-  Plug 'tpope/vim-commentary'
 
   " Autocompletion and Snippets
   Plug 'hrsh7th/nvim-cmp'
@@ -135,6 +130,17 @@ call plug#begin('~/.vim/plugged')
 
   " LSP Configuration
   Plug 'neovim/nvim-lspconfig'
+
+  " Git integration and key helper
+  Plug 'lewis6991/gitsigns.nvim'
+  Plug 'folke/which-key.nvim'
+endif
+
+  " Theme
+  Plug 'sainnhe/sonokai'
+
+  " Commenting
+  Plug 'tpope/vim-commentary'
 
   " Formatter
   Plug 'prettier/vim-prettier', {
@@ -160,16 +166,9 @@ call plug#begin('~/.vim/plugged')
   Plug 'github/copilot.vim'
 
   " Python-specific plugins
-  " " Python formatter
   Plug 'psf/black', { 'branch': 'stable' }
-  " " Requirements files syntax
   Plug 'raimon49/requirements.txt.vim'
-  " " Python virtual env management
   Plug 'petobens/poet-v'
-
-  " Add to Plugin section
-  Plug 'lewis6991/gitsigns.nvim' " Git integration
-  Plug 'folke/which-key.nvim'    " Key binding helper
 
 call plug#end()
 
@@ -187,52 +186,60 @@ call plug#end()
 " --------------------------------
 " Lualine Setup
 " --------------------------------
-lua << EOF
-require('lualine').setup {
-  sections = {
-    lualine_a = {'mode'},
-    lualine_b = {'filename', 'diagnostics'},
-    lualine_c = {'branch', 'diff'},
-    lualine_x = {'encoding', 'fileformat', 'filetype'},
-    lualine_y = {'progress'},
-    lualine_z = {'location'}
+if has('nvim')
+  lua << EOF
+  require('lualine').setup {
+    sections = {
+      lualine_a = {'mode'},
+      lualine_b = {'filename', 'diagnostics'},
+      lualine_c = {'branch', 'diff'},
+      lualine_x = {'encoding', 'fileformat', 'filetype'},
+      lualine_y = {'progress'},
+      lualine_z = {'location'}
+    }
   }
-}
 EOF
+endif
 
 " --------------------------------
 " Nvim-Tree Setup
 " --------------------------------
-lua << EOF
-require("nvim-tree").setup()
-vim.api.nvim_set_keymap(
-    'n',
-    'fm',
-    '<cmd>NvimTreeToggle<cr>',
-    { noremap = true, silent = true }
-)
+if has('nvim')
+  lua << EOF
+  require("nvim-tree").setup()
+  vim.api.nvim_set_keymap(
+      'n',
+      'fm',
+      '<cmd>NvimTreeToggle<cr>',
+      { noremap = true, silent = true }
+  )
 EOF
+endif
 
 " --------------------------------
 " Treesitter Setup
 " --------------------------------
-lua << EOF
-require('nvim-treesitter.configs').setup {
-  ensure_installed = { "python", "javascript", "typescript", "lua", "vim", "vimdoc" },
-  sync_install = false,
-  auto_install = true,
-  highlight = {
-    enable = true,
-    additional_vim_regex_highlighting = false,
-  },
-}
+if has('nvim')
+  lua << EOF
+  require('nvim-treesitter.configs').setup {
+    ensure_installed = { "python", "javascript", "typescript", "lua", "vim", "vimdoc" },
+    sync_install = false,
+    auto_install = true,
+    highlight = {
+      enable = true,
+      additional_vim_regex_highlighting = false,
+    },
+  }
 EOF
+endif
 
 " --------------------------------
 " Telescope Keybindings
 " --------------------------------
-nnoremap ff <cmd>Telescope find_files<cr>
-nnoremap fg <cmd>Telescope live_grep<cr>
+if has('nvim')
+  nnoremap ff <cmd>Telescope find_files<cr>
+  nnoremap fg <cmd>Telescope live_grep<cr>
+endif
 
 " --------------------------------
 " Copilot Configuration
@@ -308,16 +315,20 @@ augroup END
 " --------------------------------
 " Git Signs Configuration
 " --------------------------------
-lua << EOF
-require('gitsigns').setup()
+if has('nvim')
+  lua << EOF
+  require('gitsigns').setup()
 EOF
+endif
 
 " --------------------------------
 " Which-key Configuration
 " --------------------------------
-lua << EOF
-require('which-key').setup()
+if has('nvim')
+  lua << EOF
+  require('which-key').setup()
 EOF
+endif
 
 " Replace current Black configuration with:
 augroup python_formatting
@@ -344,4 +355,3 @@ augroup pipenv_settings
         endif
     endif
 augroup END
-
