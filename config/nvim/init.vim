@@ -39,9 +39,6 @@ augroup END
 " Final Touches
 " ================================================
 
-" Ensure sign column is always visible
-set signcolumn=yes
-
 " Load all packages and generate help tags silently
 packloadall
 silent! helptags ALL 
