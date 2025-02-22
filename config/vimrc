@@ -76,7 +76,7 @@ let g:split_is_full = 0
 function! SplitFullToggle()
     if g:split_is_full
         echo "equalize"
-        exe "normal \<C-W>="
+        wincmd =
         let g:split_is_full = 0
     else
         echo "maximize"
