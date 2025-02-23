@@ -136,15 +136,8 @@ if has('nvim')
   " Git integration and key helper
   Plug 'lewis6991/gitsigns.nvim'
   Plug 'folke/which-key.nvim'
-endif
 
-  " Theme
-  Plug 'sainnhe/sonokai'
-
-  " Commenting
-  Plug 'tpope/vim-commentary'
-
-  " Formatter
+  " Prettier plugin for Neovim
   Plug 'prettier/vim-prettier', {
     \ 'do': 'npm install --frozen-lockfile --production',
     \ 'for': [
@@ -163,6 +156,13 @@ endif
     \   'html'
     \ ]
     \ }
+endif
+
+  " Theme
+  Plug 'sainnhe/sonokai'
+
+  " Commenting
+  Plug 'tpope/vim-commentary'
 
   " Visual Enhancements
   Plug 'github/copilot.vim'
