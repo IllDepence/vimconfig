@@ -144,7 +144,7 @@ if has('nvim')
   Plug 'neovim/nvim-lspconfig'
 
   " Copilot
-  Plug 'github/copilot.vim'
+  Plug 'github/copilot.vim', { 'tag': '*' }
 
   " Git integration and key helper
   Plug 'lewis6991/gitsigns.nvim'
@@ -178,20 +178,6 @@ endif
   Plug 'tpope/vim-commentary'
 
 call plug#end()
-
-" --------------------------------
-" Copilot Configuration
-" --------------------------------
-
-" Disable Copilot when in /dev/shm
-au BufReadPre *
-    \ if expand('%:p:h') =~ '/dev/shm'
-    \ | let b:copilot_enabled = v:false
-    \ | endif
-
-" Ctrl + j to accept Copilot suggestions
-imap <silent><script><expr> <C-J> copilot#Accept("\<CR>")
-let g:copilot_no_tab_map = v:true
 
 " --------------------------------
 " Theme Setup

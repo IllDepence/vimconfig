@@ -9,6 +9,7 @@ function M.setup()
     require('plugins.telescope').setup()
     require('plugins.gitsigns').setup()
     require('plugins.whichkey').setup()
+    require('plugins.copilot').setup()
 end
 
 return M 
