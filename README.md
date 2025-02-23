@@ -6,7 +6,7 @@
 * `make install` - copy the config to home directory
 * `make clean` - reset config in repo to last commit
 
-## setup (for what's in the current config)
+## external setup
 
 ### System packages
 
