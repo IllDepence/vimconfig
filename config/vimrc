@@ -173,15 +173,6 @@ endif
 
 call plug#end()
 
-" ================================================
-" Plugin Configurations
-" ================================================
-
-" Load UI plugin configurations from Lua
-if has('nvim')
-  lua require('plugins.ui').setup()
-endif
-
 " --------------------------------
 " Copilot Configuration
 " --------------------------------
