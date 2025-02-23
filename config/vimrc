@@ -177,45 +177,9 @@ call plug#end()
 " Plugin Configurations
 " ================================================
 
-" --------------------------------
-" Lualine Setup
-" --------------------------------
+" Load UI plugin configurations from Lua
 if has('nvim')
-  lua << EOF
-  require('lualine').setup {
-    sections = {
-      lualine_a = {'mode'},
-      lualine_b = {'filename', 'diagnostics'},
-      lualine_c = {'branch', 'diff'},
-      lualine_x = {'encoding', 'fileformat', 'filetype'},
-      lualine_y = {'progress'},
-      lualine_z = {'location'}
-    }
-  }
-EOF
-endif
-
-" --------------------------------
-" Nvim-Tree Setup
-" --------------------------------
-if has('nvim')
-  lua << EOF
-  require("nvim-tree").setup()
-  vim.api.nvim_set_keymap(
-      'n',
-      'fm',
-      '<cmd>NvimTreeToggle<cr>',
-      { noremap = true, silent = true }
-  )
-EOF
-endif
-
-" --------------------------------
-" Telescope Keybindings
-" --------------------------------
-if has('nvim')
-  nnoremap ff <cmd>Telescope find_files<cr>
-  nnoremap fg <cmd>Telescope live_grep<cr>
+  lua require('plugins.ui').setup()
 endif
 
 " --------------------------------
