@@ -37,6 +37,12 @@ set backspace=indent,eol,start
 let g:python3_host_prog = system('which python3')  " Update this line
 set lazyredraw                                " Don't redraw while executing macros
 
+" Always turn on sign column to prevent code from jiggling left/right
+set signcolumn=yes
+
+" Disable automatic file type indentation (handled by vim-plug)
+filetype indent off
+
 " ================================================
 " File Specific Settings
 " ================================================
@@ -194,22 +200,8 @@ let g:sonokai_style = 'atlantis'
 let g:sonokai_better_performance = 1
 colorscheme sonokai
 
-" ================================================
-" Additional Plugin Configurations
-" ================================================
-
 " -------------------------------
 " Vim-Commentary Mappings
 " -------------------------------
 " Space in visual mode to toggle comment
 vmap <Space> gc
-
-" ================================================
-" Final Settings
-" ================================================
-
-" Always turn on sign column to prevent code from jiggling left/right
-set signcolumn=yes
-
-" Disable automatic file type indentation (handled by vim-plug)
-filetype indent off
