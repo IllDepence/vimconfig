@@ -7,6 +7,7 @@ function M.setup()
     require('plugins.lualine').setup()
     require('plugins.nvim-tree').setup()
     require('plugins.telescope').setup()
+    require('plugins.gitsigns').setup()
 end
 
 return M 

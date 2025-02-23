@@ -230,15 +230,6 @@ augroup END
 " ================================================
 
 " --------------------------------
-" Git Signs Configuration
-" --------------------------------
-if has('nvim')
-  lua << EOF
-  require('gitsigns').setup()
-EOF
-endif
-
-" --------------------------------
 " Which-key Configuration
 " --------------------------------
 if has('nvim')
