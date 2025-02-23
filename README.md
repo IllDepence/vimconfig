@@ -1,47 +1,38 @@
-# Vim Configuration
+# (n)vim configuration
 
-This repository contains my personal Vim and Neovim configurations for Debian 12. It includes a Makefile to easily manage the configuration files.
+## makefile targets
 
-## Directory Structure
+* `make setup` - copy vim/neovim config from your home directory to this repo
+* `make install` - copy the config to home directory
+* `make clean` - reset config in repo to last commit
 
-- `config/` - Directory containing all configuration files
-  - `vimrc` - Vim configuration file
-  - `nvim/` - Neovim configuration directory
+## setup (for what's in the current config)
 
-## Usage
+### System packages
 
-The following make targets are available:
+* Install ripgrep, fd (needed for telescope plugin)
+  ```bash
+  sudo apt install ripgrep fd-find
+  ```
 
-- `make setup` - Copy your current Vim/Neovim configurations from your home directory to this repo
-- `make install` - Install the configurations from this repo to your home directory (requires confirmation)
-- `make clean` - Reset the configuration directory to the last git commit
+### Python
 
-### Setup
+* Install neovim support, LSP server & code formatter
+  ```bash
+  sudo apt install python3-pynvim
+  pipx install pyright black
+  ```
 
-To backup your current configurations to this repo:
+###  Typescript
 
-```bash
-make setup
-```
+* Set up directory for global packages
+  ```bash
+  mkdir ~/.npm-global
+  npm config set prefix '~/.npm-global'
+  echo 'export PATH=~/.npm-global/bin:$PATH' >> ~/.zshrc
+  ```
 
-### Installation
-
-To install the configurations from this repo to your system:
-
-```bash
-make install
-```
-
-This will prompt for confirmation before overwriting your existing configurations.
-
-### Clean
-
-To reset the configuration directory to the last git commit:
-
-```bash
-make clean
-```
-
-## Note
-
-Make sure to commit your changes after running `make setup` to ensure `make clean` works as expected. 
+* Install LSP server & code formatter
+  ```bash
+  npm install -g prettier typescript typescript-language-server
+  ```
