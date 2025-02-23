@@ -1,4 +1,4 @@
-# (n)vim configuration
+# (n)vim config
 
 ## makefile targets
 
