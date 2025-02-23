@@ -229,15 +229,6 @@ augroup END
 " Plugin Configurations
 " ================================================
 
-" --------------------------------
-" Which-key Configuration
-" --------------------------------
-if has('nvim')
-  lua << EOF
-  require('which-key').setup()
-EOF
-endif
-
 " Replace current Black configuration with:
 augroup python_formatting
     autocmd!

@@ -8,6 +8,7 @@ function M.setup()
     require('plugins.nvim-tree').setup()
     require('plugins.telescope').setup()
     require('plugins.gitsigns').setup()
+    require('plugins.whichkey').setup()
 end
 
 return M 
