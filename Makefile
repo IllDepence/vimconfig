@@ -9,7 +9,7 @@ NVIM_CONFIG_DIR := $(CONFIG_DIR)/nvim
 SRC_VIMRC := $(HOME)/.vimrc
 SRC_NVIM_CONFIG := $(HOME)/.config/nvim
 
-.PHONY: setup install clean
+.PHONY: load install clean
 
 # Create necessary directories
 $(CONFIG_DIR):
@@ -19,7 +19,7 @@ $(CONFIG_DIR):
 	@echo "Directory structure created."
 
 # Copy configurations from home directory to repo
-setup: $(CONFIG_DIR)
+load: $(CONFIG_DIR)
 	@echo "Starting configuration backup..."
 	@if [ -f $(SRC_VIMRC) ]; then \
 		echo "Copying Vim configuration from $(SRC_VIMRC)..."; \

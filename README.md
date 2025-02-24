@@ -2,7 +2,7 @@
 
 ## makefile targets
 
-* `make setup` - copy vim/neovim config from your home directory to this repo
+* `make load` - copy vim/neovim config from your home directory to this repo
 * `make install` - copy the config to home directory
 * `make clean` - reset config in repo to last commit
 
@@ -36,3 +36,7 @@
   ```bash
   npm install -g prettier typescript typescript-language-server
   ```
+
+## Keybindings
+
+* See [keybindings.md](keybindings.md)

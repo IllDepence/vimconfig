@@ -1,4 +1,4 @@
-# Vim/Neovim Keybindings
+# Keybindings
 
 ## Navigation
 
@@ -46,13 +46,13 @@
 - `Ctrl + d` - Scroll docs down
 - `Ctrl + f` - Scroll docs up
 
+## Snippets
+- `Ctrl + k` - Expand snippet or jump forward
+- `Ctrl + l` - Jump backward in snippet
+
 ## Copilot
 - `Ctrl + j` - Accept Copilot suggestion
 
 ## Code Commenting
 - `Space` (in visual mode) - Toggle comment for selected lines
 - `gcc` - Toggle comment for current line
-
-## Snippets
-- `Ctrl + n` - Next snippet choice
-- `Ctrl + p` - Previous snippet choice 
