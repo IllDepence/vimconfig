@@ -32,7 +32,7 @@ let mapleader = " "
 " Prettier on Save for supported filetypes
 augroup PrettierOnSave
   autocmd!
-  autocmd BufWritePost *.js,*.ts,*.tsx,*.html,*.css,*.scss Prettier
+  autocmd BufWritePre *.js,*.ts,*.tsx,*.html,*.css,*.scss Prettier
 augroup END
 
 " Python-specific settings
